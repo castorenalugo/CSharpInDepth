@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace CSharpInDepth
 {
@@ -8,19 +9,17 @@ namespace CSharpInDepth
         static void Main()
         {
             var numbers = GetNumbers();
-            var firstTwoNumbers = CopyAtMost<int>(numbers, 2);
-            Console.WriteLine(firstTwoNumbers.Count);
-
-            var names = GetNames();
-            var fisrtTwoNames = CopyAtMost<string>(names, 2);
-            Console.WriteLine(fisrtTwoNames.Count);
+            PrintItems(numbers);
 
         }
 
-
-        private static List<T> CopyAtMost<T>(List<T> input, int maxElements)
+        static void PrintItems<T>(List<T> items) where T : IFormattable
         {
-            return input.Take(maxElements).ToList();
+            CultureInfo culture = CultureInfo.InvariantCulture;
+            foreach (T item in items)
+            {
+                Console.WriteLine(item.ToString(null, culture));
+            }
         }
 
         private static List<int> GetNumbers()
@@ -28,10 +27,5 @@ namespace CSharpInDepth
             return new List<int>() { 1, 2, 3123, 123, 123, 123, 123, 123 };
         }
 
-        private static List<string> GetNames()
-        {
-            return new List<string>() { "name1", "name2", "name3", "name4", "name5", "name6"};
-        }
     }
-
 }
