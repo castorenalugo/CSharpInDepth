@@ -8,24 +8,36 @@ namespace CSharpInDepth
 
         static void Main()
         {
-            var numbers = GetNumbers();
-            PrintItems(numbers);
+            Item<string>.Increment();
+            Item<string>.Increment();
+            Item<string>.Increment();
+            Item<string>.Increment();
+            Item<string>.Display();
 
+            Item<int>.Increment();
+            Item<int>.Display();
         }
 
-        static void PrintItems<T>(List<T> items) where T : IFormattable
+
+    }
+
+    public static class Item<T>
+    {
+        private static int value;
+
+        static Item()
         {
-            CultureInfo culture = CultureInfo.InvariantCulture;
-            foreach (T item in items)
-            {
-                Console.WriteLine(item.ToString(null, culture));
-            }
+            Console.WriteLine("Initializing counter for {0}", typeof(T));
         }
 
-        private static List<int> GetNumbers()
+        public static void Increment()
         {
-            return new List<int>() { 1, 2, 3123, 123, 123, 123, 123, 123 };
+            value++;
         }
 
+        public static void Display()
+        {
+            Console.WriteLine("Counter for {0}: {1}", typeof(T), value);
+        }
     }
 }
